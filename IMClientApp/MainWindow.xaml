@@ -1,0 +1,80 @@
+﻿<Window x:Class="IMClientApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IMClientApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Name="UserFirstName" Text="{Binding LoggedInUser.FirstName}" FontSize="14" Margin="5"/>
+            <TextBlock Name="UserLastName" Text="{Binding LoggedInUser.LastName}" FontSize="14" Margin="5"/>
+        </StackPanel>
+        <Button Name="LogoutButton" Content="Logout" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Margin="5" Click="LogoutButton_Click"/>
+        <ListBox Name="Contacts" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding ContactsDetails}" SelectionChanged="Contacts_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="FirstName" Grid.Column="0" Grid.Row="0" Text="{Binding FirstName}" Margin="5"/>
+                        <TextBlock Name="LastName" Grid.Column="1" Grid.Row="0" Text="{Binding LastName}" Margin="5"/>
+                        <TextBlock Name="LastMessage" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding LastMessageContent}" Margin="5"/>
+                        <TextBlock Name="LastMessageTime" Grid.Column="2" Grid.Row="2" Text="{Binding LastMessageTime}" Margin="5" TextWrapping="Wrap"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
+        </ListBox>
+
+        <ListView Name="Conversation" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="1" ItemsSource="{Binding MessagesCollection}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                    <TextBlock Name="MessageContent" Grid.Column="0" Grid.Row="0" Text="{Binding Content}"/>
+                    <TextBlock Name="MessageTime" Grid.Column="0" Grid.Row="1" Text="{Binding TimeSent}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Column="0" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Name="AddContactButton" Grid.Column="0" Grid.Row="0" Content="Add New Contact" Click="AddContactButton_Click" Margin="5"/>
+            <Button Name="DeleteContactButton" Grid.Column="1" Grid.Row="0" Content="Delete Contact" Click="DeleteContactButton_Click" Margin="5"/>
+        </Grid>
+        
+        <TextBox Name="NewMessageTextBox" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Text="{Binding MessageContent}"/>
+        <Button Name="SendButton" Content="Send" Grid.Column="2" Grid.Row="2" Click="SendButton_Click" Margin="5"/>
+    </Grid>
+</Window>
